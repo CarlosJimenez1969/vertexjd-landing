@@ -729,6 +729,27 @@
 
     // Auto-slide cada 6 segundos
     setInterval(() => cambiarSlide(1), 6000);
+
+    // Menú activo según sección visible
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = [
+        document.getElementById('inicio'),
+        document.getElementById('aplicaciones'),
+        document.getElementById('nosotros'),
+    ];
+
+    function actualizarNavActivo() {
+        const scrollY = window.scrollY + 80;
+        let activo = 0;
+        sections.forEach((sec, i) => {
+            if (sec && sec.offsetTop <= scrollY) activo = i;
+        });
+        navLinks.forEach(a => a.classList.remove('active'));
+        if (navLinks[activo]) navLinks[activo].classList.add('active');
+    }
+
+    window.addEventListener('scroll', actualizarNavActivo);
+    actualizarNavActivo();
 </script>
 
 </body>
