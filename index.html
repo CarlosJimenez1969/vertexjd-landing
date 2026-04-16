@@ -3,264 +3,511 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VertexJD — Soluciones Digitales para Empresas</title>
+    <title>VertexJD — Soluciones Digitales</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        :root {
+            --dark:    #0b1a12;
+            --dark2:   #0f2118;
+            --green:   #27ae60;
+            --green2:  #1e8449;
+            --light:   #f0f4f0;
+            --gray:    rgba(255,255,255,0.5);
+        }
+
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background: #0f1923;
+            background: var(--dark);
             color: #fff;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* NAVBAR */
+        /* ── NAVBAR ── */
         nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
-            background: rgba(255,255,255,0.04);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 64px;
+            background: rgba(11,26,18,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        .logo span { color: #27ae60; }
-        .nav-contact {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-            text-decoration: none;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 8px 18px;
-            border-radius: 20px;
-            transition: all 0.2s;
-        }
-        .nav-contact:hover {
-            background: rgba(255,255,255,0.1);
+        .nav-logo {
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             color: #fff;
         }
-
-        /* HERO */
-        .hero {
-            text-align: center;
-            padding: 90px 20px 70px;
-            background: radial-gradient(ellipse at top, #1a3a2a 0%, #0f1923 60%);
+        .nav-logo span { color: var(--green); }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
         }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(39,174,96,0.15);
-            border: 1px solid rgba(39,174,96,0.3);
-            color: #27ae60;
-            padding: 6px 16px;
-            border-radius: 20px;
+        .nav-links a {
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover,
+        .nav-links a.active { color: #fff; }
+        .nav-links a.active {
+            border-bottom: 2px solid var(--green);
+            padding-bottom: 2px;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .nav-lang {
+            color: rgba(255,255,255,0.5);
             font-size: 0.8rem;
             font-weight: 600;
             letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 24px;
+            cursor: pointer;
         }
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 20px;
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
         }
-        .hero h1 span { color: #27ae60; }
-        .hero p {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.6);
-            max-width: 560px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
-        }
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-        .stat { text-align: center; }
-        .stat-num {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #27ae60;
-        }
-        .stat-label {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.5);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
         }
 
-        /* APPS */
-        .section {
-            padding: 70px 20px;
-            max-width: 1100px;
+        /* ── SIDE SOCIAL ── */
+        .side-social {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .side-social a {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.2s;
+            writing-mode: vertical-rl;
+            letter-spacing: 1px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .side-social a:hover { color: var(--green); }
+        .side-line {
+            width: 1px;
+            height: 40px;
+            background: rgba(255,255,255,0.15);
             margin: 0 auto;
         }
-        .section-title {
-            text-align: center;
-            font-size: 1.8rem;
+
+        /* ── SLIDES ── */
+        .slider {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            pointer-events: none;
+        }
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Slide 1 — Facturación */
+        .slide-1 {
+            background: linear-gradient(135deg, #081510 0%, #0f2a1a 40%, #0d3321 100%);
+        }
+        /* Slide 2 — Historias Clínicas */
+        .slide-2 {
+            background: linear-gradient(135deg, #080e1a 0%, #0f1a2a 40%, #0d2133 100%);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 10;
+            padding: 0 80px 0 100px;
+            max-width: 560px;
+        }
+        .slide-tag {
+            display: inline-block;
+            font-size: 0.72rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 16px;
+            border-left: 3px solid var(--green);
+            padding-left: 10px;
         }
-        .section-sub {
-            text-align: center;
+        .slide-title {
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+        .slide-title .highlight { color: var(--green); }
+        .slide-subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 380px;
+        }
+        .slide-price-label {
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 4px;
+        }
+        .slide-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 28px;
+        }
+        .slide-price span {
+            font-size: 1rem;
             color: rgba(255,255,255,0.5);
-            margin-bottom: 50px;
-            font-size: 0.95rem;
+            font-weight: 400;
         }
-
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .app-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 30px;
-            transition: transform 0.2s, border-color 0.2s, background 0.2s;
+        .btn-cta {
+            display: inline-block;
+            background: var(--green);
+            color: #fff;
+            padding: 13px 32px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             text-decoration: none;
-            color: inherit;
-            display: block;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-cta:hover {
+            background: var(--green2);
+            transform: translateY(-2px);
+        }
+        .btn-cta.outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.7);
+        }
+        .btn-cta.outline:hover {
+            border-color: var(--green);
+            color: var(--green);
+            background: transparent;
+        }
+
+        /* BIG ICON / ILLUSTRATION */
+        .slide-visual {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 55%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .big-icon-wrap {
+            position: relative;
+            width: 380px;
+            height: 380px;
+        }
+        .big-icon-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(39,174,96,0.15) 0%, transparent 70%);
+        }
+        .big-icon-ring {
+            position: absolute;
+            inset: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(39,174,96,0.1);
+        }
+        .big-icon-ring2 {
+            position: absolute;
+            inset: 70px;
+            border-radius: 50%;
+            border: 1px solid rgba(39,174,96,0.07);
+        }
+        .big-icon {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9rem;
+            color: rgba(39,174,96,0.25);
+        }
+        .big-icon i { filter: drop-shadow(0 0 40px rgba(39,174,96,0.3)); }
+
+        /* Feature badges floating */
+        .feature-badge {
+            position: absolute;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .feature-badge i { color: var(--green); }
+        .fb-1 { top: 60px;  right: 20px; }
+        .fb-2 { top: 160px; right: -20px; }
+        .fb-3 { bottom: 120px; right: 10px; }
+        .fb-4 { bottom: 60px; right: 80px; }
+
+        /* ── SLIDER CONTROLS ── */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .slider-arrow:hover {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+        .arrow-left  { left: 60px; }
+        .arrow-right { right: 60px; }
+
+        /* ── BOTTOM BAR ── */
+        .slider-bottom {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background: rgba(0,0,0,0.35);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            padding: 0 100px;
+            gap: 0;
+            z-index: 50;
+        }
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-item.active,
+        .tab-item:hover {
+            color: #fff;
+            border-bottom-color: var(--green);
+        }
+
+        /* DOTS */
+        .slider-dots {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 50;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active {
+            background: var(--green);
+            width: 20px;
+            border-radius: 3px;
+        }
+
+        /* ── ABOUT SECTION ── */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 80vh;
+            background: var(--dark2);
+        }
+        .about-text {
+            padding: 80px 60px 80px 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .about-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 16px;
+        }
+        .about h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .about h2 span { color: var(--green); }
+        .about p {
+            color: rgba(255,255,255,0.55);
+            line-height: 1.8;
+            font-size: 0.95rem;
+            max-width: 440px;
+        }
+        .about-info {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .about-info-item {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.45);
+            display: flex;
+            gap: 10px;
+        }
+        .about-info-item i { color: var(--green); width: 14px; }
+        .about-image {
             position: relative;
             overflow: hidden;
         }
-        .app-card::before {
-            content: '';
+        .about-image-inner {
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 16px 16px 0 0;
-        }
-        .app-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.07);
-        }
-        .app-card.coming-soon {
-            opacity: 0.5;
-            cursor: default;
-            pointer-events: none;
-        }
-
-        .app-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 12px;
+            inset: 0;
+            background: linear-gradient(135deg, #0f2a1a, #0a1a10);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
-            margin-bottom: 18px;
-            background: rgba(255,255,255,0.07);
         }
-        .app-card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 8px;
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            width: 100%;
+            height: 100%;
         }
-        .app-card p {
-            font-size: 0.88rem;
-            color: rgba(255,255,255,0.55);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .app-features {
-            list-style: none;
-            margin-bottom: 24px;
-        }
-        .app-features li {
-            font-size: 0.82rem;
-            color: rgba(255,255,255,0.5);
-            padding: 3px 0;
-        }
-        .app-features li::before {
-            content: '✓ ';
-            color: var(--accent);
-            font-weight: bold;
-        }
-        .app-link {
-            display: inline-flex;
+        .about-grid-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent);
+            justify-content: center;
+            gap: 8px;
+            padding: 20px;
         }
-        .badge-soon {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.5);
-            font-size: 0.7rem;
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-weight: 600;
+        .about-grid-item i {
+            font-size: 2rem;
+            color: rgba(39,174,96,0.4);
+        }
+        .about-grid-item span {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            text-align: center;
             letter-spacing: 0.5px;
         }
-
-        /* CONTACT */
-        .contact-section {
-            background: rgba(39,174,96,0.07);
-            border-top: 1px solid rgba(39,174,96,0.15);
-            border-bottom: 1px solid rgba(39,174,96,0.15);
-            padding: 60px 20px;
-            text-align: center;
-        }
-        .contact-section h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .contact-section p {
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 30px;
-        }
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #27ae60;
-            color: #fff;
-            padding: 14px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: background 0.2s, transform 0.2s;
-        }
-        .contact-btn:hover {
-            background: #219a52;
-            transform: translateY(-2px);
+        .about-grid-item strong {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
         }
 
-        /* FOOTER */
+        /* ── FOOTER ── */
         footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: rgba(255,255,255,0.3);
-            font-size: 0.85rem;
+            background: #060e09;
+            padding: 30px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
         }
-        footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+        footer .logo { font-size: 1.1rem; }
+        footer p {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.3);
+        }
+        footer a {
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            font-size: 0.78rem;
+            transition: color 0.2s;
+        }
+        footer a:hover { color: var(--green); }
 
-        @media (max-width: 600px) {
-            nav { padding: 15px 20px; }
-            .hero { padding: 60px 20px 50px; }
-            .hero-stats { gap: 30px; }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .side-social { display: none; }
+            .slide-content { padding: 0 30px 60px; max-width: 100%; }
+            .slide-visual { display: none; }
+            .slider-arrow { display: none; }
+            .slider-bottom { padding: 0 20px; }
+            .about { grid-template-columns: 1fr; }
+            .about-text { padding: 60px 30px; }
+            .about-image { min-height: 300px; }
+            footer { padding: 20px 30px; flex-direction: column; gap: 10px; text-align: center; }
+            .arrow-left { left: 15px; }
+            .arrow-right { right: 15px; }
         }
     </style>
 </head>
@@ -268,91 +515,174 @@
 
 <!-- NAVBAR -->
 <nav>
-    <div class="logo">Vertex<span>JD</span></div>
-    <a href="mailto:cijj1969@gmail.com" class="nav-contact">
-        <i class="fas fa-envelope"></i> Contacto
-    </a>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    <div class="nav-logo">Vertex<span>JD</span></div>
+    <ul class="nav-links">
+        <li><a href="#" class="active">Inicio</a></li>
+        <li><a href="#aplicaciones">Aplicaciones</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="mailto:cijj1969@gmail.com">Contacto</a></li>
+    </ul>
+    <div class="nav-right">
+        <span class="nav-lang">ES ▾</span>
+    </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-    <div class="hero-badge"><i class="fas fa-rocket"></i> &nbsp; Soluciones Digitales</div>
-    <h1>Software a medida para<br><span>empresas ecuatorianas</span></h1>
-    <p>Desarrollamos aplicaciones web profesionales para optimizar la gestión de tu negocio. Desde facturación electrónica hasta sistemas de salud.</p>
-    <div class="hero-stats">
-        <div class="stat">
-            <div class="stat-num">100%</div>
-            <div class="stat-label">Web & Móvil</div>
-        </div>
-        <div class="stat">
-            <div class="stat-num">SRI</div>
-            <div class="stat-label">Integrado</div>
-        </div>
-        <div class="stat">
-            <div class="stat-num">24/7</div>
-            <div class="stat-label">Disponible</div>
-        </div>
-    </div>
+<!-- SOCIAL SIDE -->
+<div class="side-social">
+    <div class="side-line"></div>
+    <a href="mailto:cijj1969@gmail.com">Email</a>
+    <a href="#">LinkedIn</a>
+    <div class="side-line"></div>
 </div>
 
-<!-- APLICACIONES -->
-<div class="section">
-    <h2 class="section-title">Nuestras Aplicaciones</h2>
-    <p class="section-sub">Cada solución diseñada específicamente para el mercado ecuatoriano</p>
+<!-- SLIDER -->
+<div class="slider" id="aplicaciones">
 
-    <div class="apps-grid">
-
-        <!-- FACTURACIÓN -->
-        <a href="https://facturacion.vertexjd.com" class="app-card" style="--accent: #27ae60;">
-            <div class="app-icon" style="color:#27ae60;">
-                <i class="fas fa-file-invoice-dollar"></i>
+    <!-- SLIDE 1 — FACTURACIÓN -->
+    <div class="slide slide-1 active">
+        <div class="slide-content">
+            <div class="slide-tag">Sistema activo</div>
+            <div class="slide-title">
+                Facturación<br>
+                <span class="highlight">Electrónica</span><br>
+                SRI
             </div>
-            <h3>Facturación Electrónica</h3>
-            <p>Sistema completo de facturación electrónica integrado con el SRI de Ecuador.</p>
-            <ul class="app-features">
-                <li>Emisión de facturas XML firmadas</li>
-                <li>RIDE en PDF con logo</li>
-                <li>Envío automático al SRI</li>
-                <li>Inventario y Kardex</li>
-                <li>Envío por correo al cliente</li>
-            </ul>
-            <span class="app-link">Ingresar al sistema <i class="fas fa-arrow-right"></i></span>
-        </a>
-
-        <!-- HISTORIAS CLÍNICAS & CITAS MÉDICAS -->
-        <div class="app-card coming-soon" style="--accent: #2980b9;">
-            <span class="badge-soon">PRÓXIMAMENTE</span>
-            <div class="app-icon" style="color:#2980b9;">
-                <i class="fas fa-notes-medical"></i>
-            </div>
-            <h3>Historias Clínicas & Citas Médicas</h3>
-            <p>Sistema integral de gestión médica: expediente clínico digital y agenda de citas en un solo lugar.</p>
-            <ul class="app-features">
-                <li>Expediente clínico digital</li>
-                <li>Agenda y citas en línea</li>
-                <li>Recordatorios automáticos</li>
-                <li>Recetas e indicaciones</li>
-                <li>Acceso seguro por paciente</li>
-            </ul>
-            <span class="app-link">Próximamente <i class="fas fa-clock"></i></span>
+            <p class="slide-subtitle">Sistema completo integrado con el SRI de Ecuador. Emite facturas XML firmadas, genera RIDE en PDF y envía automáticamente al cliente.</p>
+            <div class="slide-price-label">Desde</div>
+            <div class="slide-price">$20.00 <span>USD / activación</span></div>
+            <a href="https://facturacion.vertexjd.com" class="btn-cta">Ingresar al sistema</a>
         </div>
-
+        <div class="slide-visual">
+            <div class="big-icon-wrap">
+                <div class="big-icon-glow"></div>
+                <div class="big-icon-ring"></div>
+                <div class="big-icon-ring2"></div>
+                <div class="big-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                <div class="feature-badge fb-1"><i class="fas fa-check-circle"></i> Autorizado SRI</div>
+                <div class="feature-badge fb-2"><i class="fas fa-signature"></i> Firma Electrónica</div>
+                <div class="feature-badge fb-3"><i class="fas fa-file-pdf"></i> RIDE automático</div>
+                <div class="feature-badge fb-4"><i class="fas fa-envelope"></i> Envío por correo</div>
+            </div>
+        </div>
     </div>
+
+    <!-- SLIDE 2 — HISTORIAS CLÍNICAS -->
+    <div class="slide slide-2">
+        <div class="slide-content">
+            <div class="slide-tag" style="color:#2980b9; border-color:#2980b9;">Próximamente</div>
+            <div class="slide-title">
+                Historias<br>
+                <span style="color:#2980b9;">Clínicas</span> &<br>
+                Citas Médicas
+            </div>
+            <p class="slide-subtitle">Sistema integral de gestión médica. Expediente clínico digital, agenda de citas y recordatorios automáticos para consultorios y clínicas.</p>
+            <div class="slide-price-label">Disponible</div>
+            <div class="slide-price">Próximamente</div>
+            <a href="mailto:cijj1969@gmail.com" class="btn-cta outline">Recibir notificación</a>
+        </div>
+        <div class="slide-visual">
+            <div class="big-icon-wrap">
+                <div class="big-icon-glow" style="background: radial-gradient(circle, rgba(41,128,185,0.15) 0%, transparent 70%);"></div>
+                <div class="big-icon-ring" style="border-color:rgba(41,128,185,0.1);"></div>
+                <div class="big-icon-ring2" style="border-color:rgba(41,128,185,0.07);"></div>
+                <div class="big-icon" style="color:rgba(41,128,185,0.25);"><i class="fas fa-notes-medical"></i></div>
+                <div class="feature-badge fb-1" style="--green:#2980b9;"><i class="fas fa-calendar-check" style="color:#2980b9;"></i> Agenda en línea</div>
+                <div class="feature-badge fb-2"><i class="fas fa-user-md" style="color:#2980b9;"></i> Multi-especialidad</div>
+                <div class="feature-badge fb-3"><i class="fas fa-bell" style="color:#2980b9;"></i> Recordatorios</div>
+                <div class="feature-badge fb-4"><i class="fas fa-shield-alt" style="color:#2980b9;"></i> Datos seguros</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTROLES -->
+    <div class="slider-arrow arrow-left" onclick="cambiarSlide(-1)">
+        <i class="fas fa-chevron-left"></i>
+    </div>
+    <div class="slider-arrow arrow-right" onclick="cambiarSlide(1)">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div class="slider-dots">
+        <div class="dot active" onclick="irSlide(0)"></div>
+        <div class="dot" onclick="irSlide(1)"></div>
+    </div>
+
+    <div class="slider-bottom">
+        <div class="tab-item active" onclick="irSlide(0)">Facturación Electrónica</div>
+        <div class="tab-item" onclick="irSlide(1)">Historias Clínicas & Citas</div>
+    </div>
+
 </div>
 
-<!-- CONTACTO -->
-<div class="contact-section">
-    <h2>¿Necesitas una solución personalizada?</h2>
-    <p>Desarrollamos el sistema que tu negocio necesita. Contáctanos y te asesoramos.</p>
-    <a href="mailto:cijj1969@gmail.com" class="contact-btn">
-        <i class="fas fa-envelope"></i> Escribirnos
-    </a>
+<!-- ABOUT -->
+<div class="about" id="nosotros">
+    <div class="about-text">
+        <div class="about-tag">Sobre nosotros</div>
+        <h2>Soluciones<br><span>digitales</span><br>para Ecuador</h2>
+        <p>Desarrollamos software profesional adaptado a las necesidades del mercado ecuatoriano. Nuestros sistemas están integrados con los organismos reguladores del país y diseñados para funcionar en PC y celular.</p>
+        <div class="about-info">
+            <div class="about-info-item"><i class="fas fa-map-marker-alt"></i> Ecuador</div>
+            <div class="about-info-item"><i class="fas fa-envelope"></i> cijj1969@gmail.com</div>
+            <div class="about-info-item"><i class="fas fa-globe"></i> vertexjd.com</div>
+        </div>
+    </div>
+    <div class="about-image">
+        <div class="about-image-inner">
+            <div class="about-grid">
+                <div class="about-grid-item">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <strong>100%</strong>
+                    <span>Web & Móvil</span>
+                </div>
+                <div class="about-grid-item">
+                    <i class="fas fa-university"></i>
+                    <strong>SRI</strong>
+                    <span>Integrado</span>
+                </div>
+                <div class="about-grid-item">
+                    <i class="fas fa-clock"></i>
+                    <strong>24/7</strong>
+                    <span>Disponible</span>
+                </div>
+                <div class="about-grid-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <strong>SSL</strong>
+                    <span>Seguro</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-    <p>&copy; 2026 VertexJD &nbsp;|&nbsp; <a href="https://facturacion.vertexjd.com">Facturación Electrónica</a> &nbsp;|&nbsp; Ecuador</p>
+    <div class="nav-logo">Vertex<span style="color:var(--green)">JD</span></div>
+    <p>&copy; 2026 VertexJD — Todos los derechos reservados</p>
+    <a href="mailto:cijj1969@gmail.com">cijj1969@gmail.com</a>
 </footer>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots   = document.querySelectorAll('.dot');
+    const tabs   = document.querySelectorAll('.tab-item');
+
+    function irSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        tabs[currentSlide].classList.remove('active');
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+        tabs[currentSlide].classList.add('active');
+    }
+
+    function cambiarSlide(dir) { irSlide(currentSlide + dir); }
+
+    // Auto-slide cada 6 segundos
+    setInterval(() => cambiarSlide(1), 6000);
+</script>
 
 </body>
 </html>
