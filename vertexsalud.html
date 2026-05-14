@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VertexSalud — Sistema de gestión médica para tu consultorio</title>
+    <meta name="description" content="Software médico para Ecuador. Agenda, historias clínicas, recetas y facturación electrónica SRI. 30 días gratis. $50 al año.">
+    <meta property="og:title" content="VertexSalud — Tu consultorio digital">
+    <meta property="og:description" content="Agenda, historias clínicas, recetas y facturación SRI. 30 días gratis.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-0:       #0a0e17;
+            --bg-1:       #0f172a;
+            --bg-2:       #1e293b;
+            --bg-3:       #334155;
+            --accent:     #06b6d4;   /* cyan-500 */
+            --accent-2:   #8b5cf6;   /* purple-500 */
+            --accent-3:   #10b981;   /* emerald-500 */
+            --text-1:     #f1f5f9;
+            --text-2:     #94a3b8;
+            --text-3:     #64748b;
+            --border:     rgba(255,255,255,0.08);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-0);
+            color: var(--text-1);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Glow background effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -300px; left: 50%;
+            transform: translateX(-50%);
+            width: 1000px; height: 600px;
+            background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(10,14,23,0.7);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+        .navbar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+        }
+        .logo i { color: var(--accent); font-size: 1.6rem; }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-2);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.93rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-3));
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.25s;
+            font-size: 0.95rem;
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6,182,212,0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--text-1);
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.25s;
+            font-size: 0.95rem;
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        @media (max-width: 720px) {
+            .nav-links li:not(:last-child) { display: none; }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+        }
+        .badge-new {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.3);
+            border-radius: 999px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #fff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero h1 .accent {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p.subtitle {
+            font-size: 1.2rem;
+            color: var(--text-2);
+            max-width: 700px;
+            margin: 0 auto 36px;
+        }
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .hero-note {
+            font-size: 0.9rem;
+            color: var(--text-3);
+        }
+        .hero-note i { color: var(--accent-3); margin-right: 4px; }
+
+        /* Preview mockup */
+        .hero-preview {
+            margin-top: 60px;
+            padding: 8px;
+            background: linear-gradient(135deg, var(--bg-2), var(--bg-1));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-preview .browser-bar {
+            display: flex;
+            gap: 6px;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero-preview .browser-bar span {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+        }
+        .hero-preview .browser-bar span:nth-child(1) { background: #ef4444; }
+        .hero-preview .browser-bar span:nth-child(2) { background: #f59e0b; }
+        .hero-preview .browser-bar span:nth-child(3) { background: #10b981; }
+        .hero-preview .preview-body {
+            padding: 28px;
+            background: var(--bg-1);
+            border-radius: 0 0 12px 12px;
+        }
+        .preview-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .preview-card {
+            padding: 14px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .preview-card.c1 { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+        .preview-card.c2 { background: linear-gradient(135deg, #059669, #10b981); }
+        .preview-card.c3 { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
+        .preview-card .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+        .preview-card .num { font-size: 1.5rem; font-weight: 800; }
+        .preview-card .ico { font-size: 1.1rem; opacity: 0.8; }
+        .preview-chart {
+            padding: 14px;
+            background: var(--bg-2);
+            border-radius: 10px;
+            min-height: 120px;
+            color: var(--text-2);
+            font-size: 0.8rem;
+            text-align: left;
+        }
+        @media (max-width: 600px) {
+            .preview-cards { grid-template-columns: 1fr; }
+        }
+
+        /* ── SECTIONS ── */
+        section { padding: 80px 0; }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title .tag {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .section-title h2 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .section-title p {
+            color: var(--text-2);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── FEATURES ── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(6,182,212,0.15);
+        }
+        .feature-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            margin-bottom: 18px;
+            background: rgba(6,182,212,0.1);
+            color: var(--accent);
+        }
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .feature-card p {
+            color: var(--text-2);
+            font-size: 0.95rem;
+        }
+
+        /* ── COMO FUNCIONA ── */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            position: relative;
+        }
+        .step {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+        .step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+        .step p { color: var(--text-2); font-size: 0.95rem; }
+
+        /* ── ESPECIALIDADES ── */
+        .specialties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+        }
+        .specialty {
+            padding: 18px;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+        .specialty:hover {
+            border-color: var(--accent);
+            background: var(--bg-2);
+        }
+        .specialty i {
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+        .specialty span {
+            font-size: 0.92rem;
+            font-weight: 500;
+        }
+
+        /* ── PRICING ── */
+        .pricing-wrap {
+            display: flex;
+            justify-content: center;
+        }
+        .pricing-card {
+            max-width: 480px;
+            width: 100%;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(139,92,246,0.08));
+            border: 2px solid var(--accent);
+            border-radius: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(6,182,212,0.1), transparent 60%);
+            pointer-events: none;
+        }
+        .pricing-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-3));
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            position: relative;
+        }
+        .pricing-card .price {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin: 18px 0 4px;
+            position: relative;
+        }
+        .pricing-card .period {
+            color: var(--text-2);
+            margin-bottom: 28px;
+            position: relative;
+        }
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 28px;
+            position: relative;
+        }
+        .pricing-features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-1);
+        }
+        .pricing-features li i {
+            color: var(--accent-3);
+            font-size: 1.1rem;
+        }
+        .pricing-card .btn-primary {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            position: relative;
+        }
+        .pricing-trial {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--text-2);
+            position: relative;
+        }
+
+        /* ── FAQ ── */
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            cursor: pointer;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        .faq-question i {
+            color: var(--accent);
+            transition: transform 0.3s;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            color: var(--text-2);
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-top: 12px;
+        }
+
+        /* ── FINAL CTA ── */
+        .final-cta {
+            text-align: center;
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(6,182,212,0.05), rgba(139,92,246,0.05));
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .final-cta h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .final-cta p {
+            color: var(--text-2);
+            margin-bottom: 32px;
+            font-size: 1.1rem;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-3);
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: var(--text-2);
+            text-decoration: none;
+            margin: 0 12px;
+        }
+        footer a:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="#" class="logo">
+                <i class="bi bi-hospital-fill"></i>
+                Vertex<span style="color:var(--accent);">Salud</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#caracteristicas">Características</a></li>
+                <li><a href="#especialidades">Especialidades</a></li>
+                <li><a href="#precios">Precios</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="https://sistema-salud.onrender.com/login/" class="btn-primary">Ingresar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="badge-new">
+                <i class="bi bi-stars"></i>
+                30 días GRATIS · Sin tarjeta de crédito
+            </div>
+            <h1>Tu consultorio digital,<br><span class="accent">simple y completo</span></h1>
+            <p class="subtitle">
+                Gestiona citas, historias clínicas, recetas y facturación electrónica SRI desde cualquier dispositivo.
+                Pensado para médicos, veterinarios y clínicas en Ecuador.
+            </p>
+            <div class="hero-ctas">
+                <a href="https://sistema-salud.onrender.com/registro-medico/" class="btn-primary">
+                    Comenzar gratis 30 días <i class="bi bi-arrow-right"></i>
+                </a>
+                <a href="#caracteristicas" class="btn-outline">Ver características</a>
+            </div>
+            <p class="hero-note">
+                <i class="bi bi-check-circle-fill"></i> Sin tarjeta requerida ·
+                <i class="bi bi-check-circle-fill"></i> Cancela cuando quieras ·
+                <i class="bi bi-check-circle-fill"></i> Soporte en español
+            </p>
+
+            <!-- Mockup preview -->
+            <div class="hero-preview">
+                <div class="browser-bar">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="preview-body">
+                    <h4 style="margin-bottom:14px; color:#fff;">Bienvenido, Dr. Jiménez</h4>
+                    <div class="preview-cards">
+                        <div class="preview-card c1">
+                            <div class="label">Pacientes</div>
+                            <div class="num">142</div>
+                            <i class="bi bi-people-fill ico"></i>
+                        </div>
+                        <div class="preview-card c2">
+                            <div class="label">Citas Hoy</div>
+                            <div class="num">8</div>
+                            <i class="bi bi-calendar-event ico"></i>
+                        </div>
+                        <div class="preview-card c3">
+                            <div class="label">Atendidas</div>
+                            <div class="num">324</div>
+                            <i class="bi bi-clipboard-check ico"></i>
+                        </div>
+                    </div>
+                    <div class="preview-chart">
+                        <strong>📊 Evolución de citas por mes</strong><br><br>
+                        <span style="color:#06b6d4;">▮▮▮▮▮▮▮▮▮▮</span> Enero<br>
+                        <span style="color:#10b981;">▮▮▮▮▮▮▮▮▮▮▮▮▮</span> Febrero<br>
+                        <span style="color:#8b5cf6;">▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮</span> Marzo
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARACTERÍSTICAS -->
+    <section id="caracteristicas">
+        <div class="container">
+            <div class="section-title">
+                <div class="tag">Características</div>
+                <h2>Todo lo que tu consultorio necesita</h2>
+                <p>Una plataforma completa que reemplaza Excel, papeles y múltiples herramientas dispersas.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-calendar3"></i></div>
+                    <h3>Agenda Inteligente</h3>
+                    <p>Gestiona tus citas con horarios configurables, recordatorios automáticos por WhatsApp y vista del día.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-journal-medical"></i></div>
+                    <h3>Historias Clínicas</h3>
+                    <p>Más de 20 plantillas por especialidad: pediatría, cardiología, oftalmología, veterinaria y más.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-receipt"></i></div>
+                    <h3>Facturación SRI</h3>
+                    <p>Emisión automática de facturas electrónicas autorizadas por el SRI con envío automático al correo del paciente.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-prescription"></i></div>
+                    <h3>Recetas Digitales</h3>
+                    <p>Genera recetas en PDF con tu firma profesional, envío automático por correo y archivo permanente en la nube.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-whatsapp"></i></div>
+                    <h3>WhatsApp Integrado</h3>
+                    <p>Envía recordatorios de cita con un clic. Mensajes pre-escritos profesionales listos para mandar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-people"></i></div>
+                    <h3>Personal y Roles</h3>
+                    <p>Agrega tu secretaria con permisos específicos. Cada uno ve solo lo que necesita para hacer su trabajo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-image"></i></div>
+                    <h3>Imágenes y Adjuntos</h3>
+                    <p>Sube radiografías, ecografías y resultados de exámenes. Visualiza imágenes mientras llenas la historia.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+                    <h3>Confidencialidad Total</h3>
+                    <p>Solo el médico y el paciente acceden al historial clínico. Cifrado HTTPS y respaldos automáticos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section style="background: var(--bg-1);">
+        <div class="container">
+            <div class="section-title">
+                <div class="tag">Empieza en minutos</div>
+                <h2>Tan simple como 1, 2, 3</h2>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h4>Regístrate</h4>
+                    <p>Crea tu cuenta gratis en menos de 2 minutos. Sin tarjeta de crédito requerida.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h4>Configura tu agenda</h4>
+                    <p>Define horarios de atención, duración de citas y agrega a tu secretaria si la tienes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h4>Empieza a atender</h4>
+                    <p>Recibe pacientes, registra historias clínicas y emite recetas + facturas SRI con un clic.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESPECIALIDADES -->
+    <section id="especialidades">
+        <div class="container">
+            <div class="section-title">
+                <div class="tag">Especialidades</div>
+                <h2>Pensado para tu profesión</h2>
+                <p>Cada especialidad tiene su propia plantilla de historia clínica con los campos relevantes.</p>
+            </div>
+
+            <div class="specialties-grid">
+                <div class="specialty"><i class="bi bi-eye"></i><span>Oftalmología</span></div>
+                <div class="specialty"><i class="bi bi-heart-pulse"></i><span>Cardiología</span></div>
+                <div class="specialty"><i class="bi bi-emoji-smile"></i><span>Pediatría</span></div>
+                <div class="specialty"><i class="bi bi-gender-female"></i><span>Ginecología</span></div>
+                <div class="specialty"><i class="bi bi-droplet"></i><span>Dermatología</span></div>
+                <div class="specialty"><i class="bi bi-mic"></i><span>Otorrinolaringología</span></div>
+                <div class="specialty"><i class="bi bi-bandaid"></i><span>Traumatología</span></div>
+                <div class="specialty"><i class="bi bi-mortarboard"></i><span>Odontología</span></div>
+                <div class="specialty"><i class="bi bi-brain"></i><span>Psicología</span></div>
+                <div class="specialty"><i class="bi bi-egg-fried"></i><span>Nutrición</span></div>
+                <div class="specialty"><i class="bi bi-stomach"></i><span>Gastroenterología</span></div>
+                <div class="specialty"><i class="bi bi-lungs"></i><span>Neumología</span></div>
+                <div class="specialty"><i class="bi bi-activity"></i><span>Medicina Interna</span></div>
+                <div class="specialty"><i class="bi bi-truck-front"></i><span>Emergencias</span></div>
+                <div class="specialty" style="border-color: var(--accent-3);">
+                    <i class="bi bi-heart" style="color:var(--accent-3);"></i>
+                    <span><strong>Veterinaria 🐾</strong></span>
+                </div>
+                <div class="specialty"><i class="bi bi-three-dots"></i><span>Y más...</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="precios" style="background: var(--bg-1);">
+        <div class="container">
+            <div class="section-title">
+                <div class="tag">Precio simple</div>
+                <h2>Un solo plan. Todo incluido.</h2>
+                <p>Sin sorpresas, sin niveles confusos. Todas las funcionalidades para un solo médico.</p>
+            </div>
+
+            <div class="pricing-wrap">
+                <div class="pricing-card">
+                    <div class="pricing-badge">⭐ Plan Profesional</div>
+                    <h3>VertexSalud Anual</h3>
+                    <div class="price">$50<span style="font-size:1.5rem; color:var(--text-2);">/año</span></div>
+                    <div class="period">Solo $4.17 al mes · facturado anualmente</div>
+
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> Agenda y citas ilimitadas</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Historias clínicas ilimitadas</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Facturación electrónica SRI</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Recetas digitales en PDF</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Imágenes y adjuntos en la nube</li>
+                        <li><i class="bi bi-check-circle-fill"></i> WhatsApp para recordatorios</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Hasta 5 secretarias</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Soporte por correo</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Actualizaciones automáticas</li>
+                    </ul>
+
+                    <a href="https://sistema-salud.onrender.com/registro-medico/" class="btn-primary">
+                        Empezar 30 días gratis
+                    </a>
+                    <p class="pricing-trial">
+                        Pruebas todo gratis. Si te gusta, pagas $50/año. Si no, no pagas nada.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="container">
+            <div class="section-title">
+                <div class="tag">Preguntas frecuentes</div>
+                <h2>¿Te quedan dudas?</h2>
+            </div>
+
+            <div class="faq">
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        ¿Necesito tarjeta de crédito para empezar?
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        No. Te registras con tu correo y empiezas a usar el sistema durante 30 días totalmente gratis.
+                        Solo si decides continuar, pagas los $50 al año con tarjeta vía PayPhone (servicio ecuatoriano confiable).
+                    </div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        ¿Puedo emitir facturas electrónicas autorizadas por el SRI?
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Sí. El sistema genera, firma y envía las facturas al SRI automáticamente. El paciente recibe
+                        la factura autorizada en su correo con XML + RIDE PDF adjuntos.
+                    </div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        ¿Puede usarlo mi secretaria?
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Sí, puedes invitar hasta 5 secretarias. Cada una tiene su propio usuario y puede gestionar
+                        citas, pacientes y triajes — pero no puede ver el historial clínico (eso es confidencial,
+                        solo médico y paciente).
+                    </div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        ¿Puedo cancelar cuando quiera?
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Sí. No hay contratos ni penalidades. Si decides no continuar después del trial, simplemente
+                        no pagas. Si ya pagaste el año, sigues usando hasta el final del periodo y no se renueva
+                        automáticamente sin tu autorización.
+                    </div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        ¿Funciona para veterinarios?
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Sí. Tenemos una especialidad Veterinaria con registro de mascotas (perro, gato, ave, etc.),
+                        sus dueños, historias clínicas adaptadas para animales (signos vitales animales, vacunación,
+                        desparasitación) y todo lo necesario.
+                    </div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        ¿Mis datos están seguros?
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Sí. Toda la información viaja por HTTPS cifrado, se almacena en servidores con backup automático,
+                        y solo los usuarios autorizados acceden a cada dato. Las historias clínicas son confidenciales
+                        por diseño.
+                    </div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        ¿Puedo acceder desde mi celular?
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Sí. El sistema funciona en cualquier dispositivo: computador, tablet o celular. No hay que
+                        instalar nada, solo abrir el navegador.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Empieza hoy. Sin riesgos.</h2>
+            <p>Únete a los médicos que ya están digitalizando sus consultorios.</p>
+            <a href="https://sistema-salud.onrender.com/registro-medico/" class="btn-primary" style="padding:16px 36px; font-size:1.05rem;">
+                Crear cuenta gratis <i class="bi bi-arrow-right"></i>
+            </a>
+            <p style="margin-top:16px; color:var(--text-3); font-size:0.9rem;">
+                30 días gratis · Sin tarjeta · Cancela cuando quieras
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div style="margin-bottom: 16px;">
+                <a href="#caracteristicas">Características</a>
+                <a href="#precios">Precios</a>
+                <a href="#faq">FAQ</a>
+                <a href="mailto:contacto@vertexjd.com">Contacto</a>
+                <a href="https://sistema-salud.onrender.com/login/">Ingresar</a>
+            </div>
+            <p>&copy; 2026 VertexSalud · Producto de <a href="https://vertexjd.com" style="color:var(--accent);">VertexJD</a></p>
+            <p style="margin-top:6px;"><a href="mailto:contacto@vertexjd.com">contacto@vertexjd.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll para links del navbar
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
