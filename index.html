@@ -549,36 +549,8 @@
 <!-- SLIDER -->
 <div class="slider" id="inicio">
 
-    <!-- SLIDE 1 — FACTURACIÓN -->
-    <div class="slide slide-1 active">
-        <div class="slide-content">
-            <div class="slide-tag">Sistema activo</div>
-            <div class="slide-title">
-                Facturación<br>
-                <span class="highlight">Electrónica</span><br>
-                SRI
-            </div>
-            <p class="slide-subtitle">Sistema completo integrado con el SRI de Ecuador. Emite facturas XML firmadas, genera RIDE en PDF y envía automáticamente al cliente.</p>
-            <div class="slide-price-label">Desde</div>
-            <div class="slide-price">$20.00 <span>USD / activación</span></div>
-            <a href="https://facturacion.vertexjd.com" class="btn-cta">Ingresar al sistema</a>
-        </div>
-        <div class="slide-visual">
-            <div class="big-icon-wrap">
-                <div class="big-icon-glow"></div>
-                <div class="big-icon-ring"></div>
-                <div class="big-icon-ring2"></div>
-                <div class="big-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                <div class="feature-badge fb-1"><i class="fas fa-check-circle"></i> Autorizado SRI</div>
-                <div class="feature-badge fb-2"><i class="fas fa-signature"></i> Firma Electrónica</div>
-                <div class="feature-badge fb-3"><i class="fas fa-file-pdf"></i> RIDE automático</div>
-                <div class="feature-badge fb-4"><i class="fas fa-envelope"></i> Envío por correo</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 2 — VERTEXSALUD (HISTORIAS CLÍNICAS) -->
-    <div class="slide slide-2">
+    <!-- SLIDE 1 — VERTEXSALUD (HISTORIAS CLÍNICAS) -->
+    <div class="slide slide-2 active">
         <div class="slide-content">
             <div class="slide-tag" style="color:#2980b9; border-color:#2980b9;">¡Disponible! · 30 días GRATIS</div>
             <div class="slide-title">
@@ -605,6 +577,34 @@
         </div>
     </div>
 
+    <!-- SLIDE 2 — FACTURACIÓN -->
+    <div class="slide slide-1">
+        <div class="slide-content">
+            <div class="slide-tag">Sistema activo</div>
+            <div class="slide-title">
+                Facturación<br>
+                <span class="highlight">Electrónica</span><br>
+                SRI
+            </div>
+            <p class="slide-subtitle">Sistema completo integrado con el SRI de Ecuador. Emite facturas XML firmadas, genera RIDE en PDF y envía automáticamente al cliente.</p>
+            <div class="slide-price-label">Desde</div>
+            <div class="slide-price">$20.00 <span>USD / activación</span></div>
+            <a href="https://facturacion.vertexjd.com" class="btn-cta">Ingresar al sistema</a>
+        </div>
+        <div class="slide-visual">
+            <div class="big-icon-wrap">
+                <div class="big-icon-glow"></div>
+                <div class="big-icon-ring"></div>
+                <div class="big-icon-ring2"></div>
+                <div class="big-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                <div class="feature-badge fb-1"><i class="fas fa-check-circle"></i> Autorizado SRI</div>
+                <div class="feature-badge fb-2"><i class="fas fa-signature"></i> Firma Electrónica</div>
+                <div class="feature-badge fb-3"><i class="fas fa-file-pdf"></i> RIDE automático</div>
+                <div class="feature-badge fb-4"><i class="fas fa-envelope"></i> Envío por correo</div>
+            </div>
+        </div>
+    </div>
+
     <!-- CONTROLES -->
     <div class="slider-arrow arrow-left" onclick="cambiarSlide(-1)">
         <i class="fas fa-chevron-left"></i>
@@ -619,8 +619,8 @@
     </div>
 
     <div class="slider-bottom">
-        <div class="tab-item active" onclick="irSlide(0)">Facturación Electrónica</div>
-        <div class="tab-item" onclick="irSlide(1)">Historias Clínicas & Citas</div>
+        <div class="tab-item active" onclick="irSlide(0)">Historias Clínicas & Citas</div>
+        <div class="tab-item" onclick="irSlide(1)">Facturación Electrónica</div>
     </div>
 
 </div>
@@ -634,24 +634,7 @@
 
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:28px; text-align:left;">
 
-            <!-- Tarjeta 1 — Facturación -->
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(39,174,96,0.25); border-radius:16px; padding:36px 32px; transition:transform 0.2s, border-color 0.2s;" onmouseover="this.style.transform='translateY(-6px)';this.style.borderColor='rgba(39,174,96,0.6)'" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='rgba(39,174,96,0.25)'">
-                <div style="width:56px; height:56px; background:rgba(39,174,96,0.15); border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
-                    <i class="fas fa-file-invoice-dollar" style="font-size:1.6rem; color:#27ae60;"></i>
-                </div>
-                <h3 style="color:#fff; font-size:1.25rem; font-weight:800; margin-bottom:10px;">Facturación Electrónica</h3>
-                <p style="color:rgba(255,255,255,0.5); font-size:0.9rem; line-height:1.6; margin-bottom:24px;">Emite facturas electrónicas integradas con el SRI. Firma digital, envío automático, kardex de inventario y reportes PDF.</p>
-                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;">
-                    <span style="background:rgba(39,174,96,0.12); color:#27ae60; font-size:0.72rem; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(39,174,96,0.25);">SRI Integrado</span>
-                    <span style="background:rgba(39,174,96,0.12); color:#27ae60; font-size:0.72rem; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(39,174,96,0.25);">Firma Digital</span>
-                    <span style="background:rgba(39,174,96,0.12); color:#27ae60; font-size:0.72rem; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(39,174,96,0.25);">Inventario</span>
-                </div>
-                <a href="https://facturacion.vertexjd.com" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#27ae60; color:#fff; font-size:0.85rem; font-weight:700; padding:11px 24px; border-radius:8px; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#1e8449'" onmouseout="this.style.background='#27ae60'">
-                    Ir a la aplicación <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- Tarjeta 2 — VertexSalud (Historias Clínicas & Citas) -->
+            <!-- Tarjeta 1 — VertexSalud (Historias Clínicas & Citas) -->
             <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(30,120,200,0.25); border-radius:16px; padding:36px 32px; transition:transform 0.2s, border-color 0.2s; position:relative;" onmouseover="this.style.transform='translateY(-6px)';this.style.borderColor='rgba(30,120,200,0.6)'" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='rgba(30,120,200,0.25)'">
                 <div style="position:absolute; top:16px; right:16px; background:linear-gradient(135deg,#06b6d4,#10b981); color:#fff; font-size:0.7rem; font-weight:700; padding:4px 10px; border-radius:20px; letter-spacing:0.5px;">
                     NUEVO · 30 días GRATIS
@@ -668,6 +651,23 @@
                 </div>
                 <a href="vertexsalud.html" style="display:inline-flex; align-items:center; gap:8px; background:#1e78c8; color:#fff; font-size:0.85rem; font-weight:700; padding:11px 24px; border-radius:8px; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#155a96'" onmouseout="this.style.background='#1e78c8'">
                     Conocer más <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Tarjeta 2 — Facturación -->
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(39,174,96,0.25); border-radius:16px; padding:36px 32px; transition:transform 0.2s, border-color 0.2s;" onmouseover="this.style.transform='translateY(-6px)';this.style.borderColor='rgba(39,174,96,0.6)'" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='rgba(39,174,96,0.25)'">
+                <div style="width:56px; height:56px; background:rgba(39,174,96,0.15); border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+                    <i class="fas fa-file-invoice-dollar" style="font-size:1.6rem; color:#27ae60;"></i>
+                </div>
+                <h3 style="color:#fff; font-size:1.25rem; font-weight:800; margin-bottom:10px;">Facturación Electrónica</h3>
+                <p style="color:rgba(255,255,255,0.5); font-size:0.9rem; line-height:1.6; margin-bottom:24px;">Emite facturas electrónicas integradas con el SRI. Firma digital, envío automático, kardex de inventario y reportes PDF.</p>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;">
+                    <span style="background:rgba(39,174,96,0.12); color:#27ae60; font-size:0.72rem; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(39,174,96,0.25);">SRI Integrado</span>
+                    <span style="background:rgba(39,174,96,0.12); color:#27ae60; font-size:0.72rem; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(39,174,96,0.25);">Firma Digital</span>
+                    <span style="background:rgba(39,174,96,0.12); color:#27ae60; font-size:0.72rem; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(39,174,96,0.25);">Inventario</span>
+                </div>
+                <a href="https://facturacion.vertexjd.com" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#27ae60; color:#fff; font-size:0.85rem; font-weight:700; padding:11px 24px; border-radius:8px; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#1e8449'" onmouseout="this.style.background='#27ae60'">
+                    Ir a la aplicación <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
